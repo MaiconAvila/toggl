@@ -7,41 +7,13 @@ class Signup extends React.Component {
 
     this.state = {
       register: {
+        nome: [],
         email: [],
-        senha: []
-      },
-      items: [],
-      password: []
+        password: [],
+        passwordConf: []
+      }
     };
   }
-
-  register = ev => {
-    ev.preventDefault();
-
-    if (this.valueEmail !== "") {
-      let newEmail = {
-        text: this.valueEmail.value,
-        key: Date.now()
-      };
-      this.setState({ items: [...this.state.items, newEmail] });
-    }
-
-    if (this.password !== "") {
-      let newPassword = {
-        text: this.password.value,
-        key: Date.now()
-      };
-      this.valueEmail = "";
-      this.setState({
-        password: [...this.state.items, newPassword]
-      });
-    }
-  };
-
-  log = ev => {
-    ev.preventDefault();
-    console.log(this.state.items, this.state.password);
-  };
 
   render() {
     return (
@@ -51,18 +23,28 @@ class Signup extends React.Component {
           this.props.handleSetState("login");
         }}
       >
-        {this.state.register.erro && <p>{this.state.register.erro}</p>}
         <label>
           Nome:
-          <input type="text" placeholder="Nome" />
+          <input
+            type="text"
+            placeholder="Nome"
+            onChange={ev =>
+              this.setState({
+                name: ev.target.value
+              })
+            }
+          />
         </label>
         <label>
           Email:
           <input
             type="email"
             placeholder="Email"
-            onChange={ev => this.setState({ email: ev.target.value })}
-            ref={event => (this.valueEmail = event)}
+            onChange={ev =>
+              this.setState({
+                email: ev.target.value
+              })
+            }
           />
         </label>
         <label>
@@ -70,11 +52,23 @@ class Signup extends React.Component {
           <input
             type="password"
             placeholder="Senha"
-            onChange={ev => this.setState({ password: ev.target.value })}
-            ref={event => (this.password = event)}
+            onChange={ev =>
+              this.setState({
+                password: ev.target.value
+              })
+            }
+          />
+          <input
+            type="password"
+            placeholder="Confirme a senha"
+            onChange={ev =>
+              this.setState({
+                passwordConf: ev.target.value
+              })
+            }
           />
         </label>
-        <input type="submit" onSubmit={this.register} />
+        <input type="submit" />
       </form>
     );
   }
